@@ -84,8 +84,8 @@ traintest$feature <- factor(traintest$featureDesc)
 
 #Seperate features from featureDesc.
 
-grepFunc <- function(regex) {
-  grepl(regex, traintest$feature)
+grepFunc <- function(pattern) {
+  grepl(pattern, traintest$feature)
 }
 
 ## Features with 2 categories
@@ -119,3 +119,8 @@ setkey(traintest, subject, activity, featDomain, featAcceleration, featInstrumen
        featJerk, featMagnitude, featureVar, featAxis)
 TidyData <- traintest[, list(count = .N, average = mean(value)), by = key(traintest)]
 
+
+#Save Tidy Data
+
+f <- file.path(conPath, "TidyData.txt")
+write.table(TidyData, f, quote=FALSE, sep="\t", row.names=FALSE)
